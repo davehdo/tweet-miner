@@ -2,21 +2,33 @@
 
 <h1>Tweet queries</h1>
 
-<table>
+
+<table class="table">
   <thead>
     <tr>
       <th>Keyword</th>
       <th>n Results</th>
-      <th>Performed</th>
+      <th>Result posted time-range</th>
+      <th>Query performed at</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @tweets.each do |tweet| %>
+    
+    <%
+    
+
+    
+    parsed = JSON.parse(tweet.full_json)
+
+    
+    %>
       <tr>
         <td><%= tweet.keyword %></td>
-        <td><%= JSON.parse(tweet.full_json).size %></td>
+        <td><%= parsed.size %></td>
+        <td><%= Time.parse( parsed[0]["created_at"] ) %> - <%= Time.parse( parsed.last["created_at"] ) %></td>
         <td><%= time_ago_in_words( tweet.created_at ) %> ago</td>
         <td><%= link_to 'Show', tweet %></td>
         <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
