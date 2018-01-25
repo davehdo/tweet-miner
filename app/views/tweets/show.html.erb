@@ -16,7 +16,11 @@
 </p>
 
 
-
+<%
+  
+  omit_keys = ["created_at", "id", "id_str", "text", "truncated", "possibly_sensitive", "profile_image_url", "profile_image_url_https", "profile_banner_url", "profile_sidebar_fill_color", "profile_background_image_url_https", "profile_background_tile", "profile_background_image_url", "profile_link_color", "profile_sidebar_border_color", "profile_text_color", "profile_use_background_image", "has_extended_profile", "in_reply_to_status_id_str", "in_reply_to_user_id_str", "contributors", "geo", "entities", "is_quote_status"]
+  
+%>
 <table class="table">
   <tr>
     <th>Header</th>
@@ -27,12 +31,12 @@
     <td><%= tweet["text"] %></td>
     <td><%= tweet["favorite_count"] %></td>
     <td>
-      <table border="0" cellspacing="5" cellpadding="5">
+      <table class="table">
 
-      <% tweet.each do |k,v| %>
+      <% tweet.select {|k,v| !omit_keys.include?(k)}.each do |k,v| %>
         <tr>
           <td><%= k %></td>
-          <td><%= v %></td>
+          <td><%= v.class == Hash ? v.select {|k,v| !omit_keys.include?(k)} : v %></td>
         </tr>
       <% end %>
       </table>
