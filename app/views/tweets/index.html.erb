@@ -24,7 +24,9 @@
     
     %>
       <tr>
-        <td><%= parsed.size %></td>
+        <td><%= parsed.size %> 
+          (<%= parsed.uniq {|e| e["text"].gsub(/\d/, "0")}.size %> unique text)
+        </td>
         <td><%= earliest_at.strftime("%Y-%m-%d %H:%M") %> - 
           <%= latest_at.strftime(earliest_at.to_date == latest_at.to_date ? "%H:%M" : "%m-%d %H:%M") %>
         </td>
