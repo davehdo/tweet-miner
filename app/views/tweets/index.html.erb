@@ -3,6 +3,43 @@
 <h1>Tweet Queries<%= " for #{@channel.name}" if @channel %></h1>
 
 
+<div id="chart_div" style="width: 900px; height: 300px"></div>
+
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'Tweets per hour');
+
+        data.addRows(<%= @tweets.collect {|t| [t.created_at, t.unique_tweets_per_hour.round]}.to_json.html_safe %>
+          .map(function(e) {return [new Date(e[0]), e[1]]}))
+
+        var options = {
+          title: 'Tweets per hour',
+          width: 900,
+          height: 300,
+          hAxis: {
+            format: 'M/d/yy',
+            gridlines: {count: 15}
+          },
+          vAxis: {
+            gridlines: {color: 'none'},
+            minValue: 0
+          }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+
+</script>
+      
 <table class="table">
   <thead>
     <tr>
@@ -18,16 +55,16 @@
     
     <%
     
-    parsed = JSON.parse(tweet.full_json)
-    earliest_at = Time.parse( parsed.last["created_at"] )
-    latest_at = Time.parse( parsed.first["created_at"] )
+
+    earliest_at = Time.parse( tweet.parsed_json.last["created_at"] )
+    latest_at = Time.parse( tweet.parsed_json.first["created_at"] )
     
     %>
       <tr>
-        <td><%= parsed.size %> 
-          (<%= parsed.uniq {|e| e["text"].gsub(/\d/, "0")}.size %> unique text)
+        <td><%= tweet.parsed_json.size %> 
+          (<%= tweet.n_unique_tweets %> unique text)
         </td>
-        <td><%= earliest_at.strftime("%Y-%m-%d %H:%M") %> - 
+        <td><%= earliest_at.strftime("%Y-%m-%d %H:%M") %> &mdash; 
           <%= latest_at.strftime(earliest_at.to_date == latest_at.to_date ? "%H:%M" : "%m-%d %H:%M") %>
         </td>
         <td><%= time_ago_in_words( tweet.created_at ) %> ago</td>
