@@ -30,6 +30,7 @@
         </td>
         <td><%= time_ago_in_words( tweet.created_at ) %> ago</td>
         <td><%= link_to 'Show', tweet %></td>
+        <td><%= link_to 'Show Expanded', "#{tweet_path(tweet)}?expanded=t" %></td>
         <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -38,4 +39,6 @@
 
 <br>
 
-
+<% if @channel %>
+<%= link_to "Rerun query", rerun_query_channel_path( @channel ), class: "btn btn-default" %>
+<% end %>

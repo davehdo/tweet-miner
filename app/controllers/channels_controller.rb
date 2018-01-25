@@ -1,6 +1,14 @@
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: [:show, :edit, :update, :destroy]
+  before_action :set_channel, only: [:show, :edit, :update, :destroy, :rerun_query]
 
+
+  def rerun_query
+    @channel.rerun_query
+
+    
+    redirect_to channel_tweets_path(@channel), notice: "Query was re-run"
+  end
+  
   # GET /channels
   # GET /channels.json
   def index
