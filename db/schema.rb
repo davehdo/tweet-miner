@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180125023612) do
+ActiveRecord::Schema.define(version: 20180125143843) do
+
+  create_table "channels", force: :cascade do |t|
+    t.string "keyword"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tweets", force: :cascade do |t|
     t.string "keyword"
@@ -18,6 +25,7 @@ ActiveRecord::Schema.define(version: 20180125023612) do
     t.text "full_json"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "channel_id"
   end
 
 end

@@ -28,7 +28,7 @@ class TweetsController < ApplicationController
       Tweet.create( keyword: "XRP", unique_id:  nil, full_json: tweets.to_json)
     end
     
-    @tweets = Tweet.all
+    @tweets = params[:channel_id].present? ? Channel.find(params[:channel_id]).tweets : Tweet.all
   end
 
   # GET /tweets/1
@@ -93,6 +93,6 @@ class TweetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tweet_params
-      params.require(:tweet).permit(:keyword, :unique_id, :full_json)
+      params.require(:tweet).permit(:keyword, :unique_id, :full_json, :channel_id)
     end
 end

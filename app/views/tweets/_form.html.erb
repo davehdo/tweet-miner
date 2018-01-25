@@ -16,14 +16,11 @@
     <%= form.text_field :keyword, id: :tweet_keyword %>
   </div>
 
-  <div class="field">
-    <%= form.label :unique_id %>
-    <%= form.text_field :unique_id, id: :tweet_unique_id %>
-  </div>
+
 
   <div class="field">
-    <%= form.label :full_json %>
-    <%= form.text_area :full_json, id: :tweet_full_json %>
+    <%= form.label :channel_id %>
+    <%= form.select :channel_id, Channel.all.collect {|c| [ c.name, c.id ] }, id: :tweet_channel_id %>
   </div>
 
   <div class="actions">
