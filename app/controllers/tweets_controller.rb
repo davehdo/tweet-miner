@@ -28,7 +28,12 @@ class TweetsController < ApplicationController
       Tweet.create( keyword: "XRP", unique_id:  nil, full_json: tweets.to_json)
     end
     
-    @tweets = params[:channel_id].present? ? Channel.find(params[:channel_id]).tweets : Tweet.all
+    if params[:channel_id].present? 
+      @channel = Channel.find(params[:channel_id])
+    end
+    
+    
+    @tweets = @channel ? @channel.tweets : Tweet.all
   end
 
   # GET /tweets/1
