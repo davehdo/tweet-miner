@@ -1,5 +1,16 @@
 # README
 
+## Setup
+define the following vars in ```root/.env```
+
+```
+TWITTER_CONSUMER_KEY=1234
+TWITTER_CONSUMER_SECRET=1234
+TWITTER_ACCESS_TOKEN=1234
+TWITTER_ACCESS_SECRET=1234
+```
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
