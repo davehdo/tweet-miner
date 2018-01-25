@@ -19,19 +19,19 @@
     
     <%
     
-
-    
     parsed = JSON.parse(tweet.full_json)
-
+    earliest_at = Time.parse( parsed.last["created_at"] )
+    latest_at = Time.parse( parsed.first["created_at"] )
     
     %>
       <tr>
         <td><%= tweet.keyword %></td>
         <td><%= parsed.size %></td>
-        <td><%= Time.parse( parsed[0]["created_at"] ) %> - <%= Time.parse( parsed.last["created_at"] ) %></td>
+        <td><%= earliest_at.strftime("%Y-%m-%d %H:%M") %> - 
+          <%= latest_at.strftime(earliest_at.to_date == latest_at.to_date ? "%H:%M" : "%m-%d %H:%M") %>
+        </td>
         <td><%= time_ago_in_words( tweet.created_at ) %> ago</td>
         <td><%= link_to 'Show', tweet %></td>
-        <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
         <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
