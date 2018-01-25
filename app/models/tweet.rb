@@ -6,7 +6,7 @@ class Tweet < ApplicationRecord
   end
    
   def unique_tweets_per_hour
-    1.0 * n_unique_tweets / time_span
+    (1.0 * n_unique_tweets / time_span).round
   end
   
   def n_unique_tweets

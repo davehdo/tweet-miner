@@ -8,6 +8,7 @@
       <th>Name</th>
       <th>Keyword</th>
       <th>Last query at</th>
+      <th>Tweets per hour</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -17,8 +18,9 @@
       <tr>
         <td><%= channel.name %></td>
         <td><%= channel.keyword %></td>
-        <td><%= t = channel.tweets.order("created_at desc").limit(1).select("created_at")[0]; 
+        <td><%= t = channel.tweets.order("created_at desc").limit(1).select("full_json,created_at")[0]; 
           t ? "#{time_ago_in_words(t.created_at)} ago" : "none" %></td>
+        <td><%= t ? t.unique_tweets_per_hour : "" %></td>
         <td><%= link_to 'Show', channel_tweets_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%= link_to 'Edit', edit_channel_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%# link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -29,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Channel', new_channel_path %>
+<%= link_to 'New Channel', new_channel_path, class: "btn btn-default" %>
