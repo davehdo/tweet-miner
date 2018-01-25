@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Keyword:</strong>
+  <%= @tweet.keyword %>
+</p>
+
+<p>
+  <strong>Unique:</strong>
+  <%= @tweet.unique_id %>
+</p>
+
+<p>
+  <strong>Full json:</strong>
+  <%= @tweet.full_json %>
+</p>
+
+<%= link_to 'Edit', edit_tweet_path(@tweet) %> |
+<%= link_to 'Back', tweets_path %>
