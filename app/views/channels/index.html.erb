@@ -6,7 +6,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Keyword</th>
+      <th>Symbol</th>
+      <th>Search Keyword(s)</th>
       <th>Last query at</th>
       <th>Tweets per hour</th>
       <th>Last exchange rate</th>
@@ -16,8 +17,9 @@
 
   <tbody>
     <% @channels.each do |channel| %>
-      <tr>
+      <tr class="<%= "success" if channel.active %>">
         <td><%= channel.name %></td>
+        <td><%= channel.symbol %></td>
         <td><%= channel.keyword %></td>
         <td><%= t = channel.tweets.order("created_at desc").limit(1).select("full_json,created_at")[0]; 
           t ? "#{time_ago_in_words(t.created_at)} ago" : "none" %></td>
