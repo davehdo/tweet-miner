@@ -21,5 +21,6 @@ Things you may want to cover:
 ## Scheduled tasks
 ```
 rake exchange_rates:recent_or_fetch
+rake channels:fetch_all
 ```
 
