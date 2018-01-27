@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Tweet Queries<%= " for #{@channel.name}" if @channel %></h1>
+<h1>Queries<%= " for #{@channel.name} (#{@channel.symbol})" if @channel %></h1>
 
 
 <div id="chart_div" style="width: 900px; height: 300px"></div>
@@ -14,7 +14,7 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('date', 'Date');
-        data.addColumn('number', 'Tweets per hour');
+        data.addColumn('number', 'Mentions per hour');
         data.addColumn('number', 'Price in USD');
 
         data.addRows(<%= 
@@ -25,9 +25,9 @@
           .map(function(e) {return [new Date(e[0]), e[1], e[2]]}))
 
         var options = {
-          title: 'Tweets per hour',
+          // title: 'Tweets per hour',
           width: 900,
-          height: 300,
+          height: 250,
           hAxis: {
             format: 'M/d/yy',
             gridlines: {count: 15}
@@ -42,7 +42,7 @@
             },
           axes: {
             y: {
-              'n': {label: 'Tweets per hour'},
+              'n': {label: 'Mentions per hour'},
               'price': {label: 'Price in USD', format: 'currency'}
             }
           },
