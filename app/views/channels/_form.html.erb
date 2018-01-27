@@ -11,17 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :channel_name %>
+    <%= form.text_field :name, id: :channel_name, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :keyword %>
-    <%= form.text_field :keyword, id: :channel_keyword %>
+  <div class="form-group">
+    <%= form.label :keyword, "Twitter search keyword(s)" %>
+    <%= form.text_field :keyword, id: :channel_keyword, class: "form-control" %>
   </div>
+
+  <div class="form-group">
+    <%= form.label :symbol %>
+    <%= form.text_field :symbol, id: :channel_symbol, class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= form.check_box :active, id: :channel_active %>
+    <%= form.label :active, "Actively update this channel" %>
+  </div>
+
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit nil, class: "btn btn-default" %>
   </div>
 <% end %>
