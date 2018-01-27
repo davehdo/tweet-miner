@@ -23,7 +23,7 @@ class ChannelsController < ApplicationController
 
   # GET /channels/new
   def new
-    @channel = Channel.new
+    @channel = Channel.new(active: true)
   end
 
   # GET /channels/1/edit
