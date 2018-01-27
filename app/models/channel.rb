@@ -1,8 +1,12 @@
 class Channel < ApplicationRecord
   has_many :tweets
   
+  def last_query
+    tweets.order("created_at desc").limit(1)[0]; 
+  end
+  
   def rerun_query # twitter search API
-    
+    puts "  Fetching twitter data for #{ self.name }"
     # Requests / 15-min window (app auth)	
     if self.keyword.present?
 
