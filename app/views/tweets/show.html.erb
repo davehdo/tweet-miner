@@ -17,21 +17,30 @@
   <tr>
     <th style="min-width: 200px; ">Created at</th>
     <th>Text</th>
-    <th style="min-width: 200px; ">Statistics</th>
+    <th style="min-width: 250px; ">Statistics</th>
     <th></th>
   </tr>
-  <% JSON.parse(@tweet.full_json).each do |tweet| %>
+  <% (@tweet.parsed_json || []).group_by {|t| t["text"]}.each do |text, tweets| %>
+
   <tr>
-    <td><%= tweet["created_at"] %></td>
-    <td><%= tweet["text"] %></td>
+    <td><%= tweets.last["created_at"] %></td>
+    <td><%= text.gsub(/^RT @.*?: /, "") %></td>    
     <td>
-      <div>Favs: <%= tweet["favorite_count"] %></div>
-      <div>RT: <%= tweet["retweet_count"] %></div>
+      <ul>
+      <li>Language: <%= tweets[0]["lang"] %></li>
+      <li>RT: <%= tweets[0]["retweet_count"] %></li>
+      <% tweets.each do |tweet| %>
+        <li>User: <%= tweet["user"]["name"] %></li>
+        <ul>
+          <li>Favs: <%= tweet["favorite_count"] %></li>
       
-      <div>User: <%= tweet["user"]["name"] %></div>
-      <div>User followers: <%= tweet["user"]["followers_count"] %></div>
-      <div>User statuses: <%= tweet["user"]["statuses_count"] %></div>
-      <div>Language: <%= tweet["lang"] %></div>
+          <li>User followers: <%= tweet["user"]["followers_count"] %></li>
+          <li>User statuses: <%= tweet["user"]["statuses_count"] %></li>
+
+        </ul>
+      
+      <% end %>
+      </ul>
       
     </td>
     <td>

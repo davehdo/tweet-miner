@@ -12,7 +12,7 @@ class Tweet < ApplicationRecord
   end
   
   def n_unique_tweets
-    parsed_json.uniq {|e| e["text"].gsub(/\d/, "0")}.size  
+    parsed_json.uniq {|e| e["text"].gsub(/\d/, "0").gsub(/^RT @.*?: /, "")}.size  
   end
   
   def time_span
