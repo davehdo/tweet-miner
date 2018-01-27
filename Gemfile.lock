@@ -66,6 +66,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    coinbase (4.1.0)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
     domain_name (0.5.20170404)
@@ -225,6 +226,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
+  coinbase
   dotenv-rails
   jbuilder (~> 2.5)
   jquery-rails
