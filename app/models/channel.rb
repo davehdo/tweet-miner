@@ -1,7 +1,9 @@
 class Channel < ApplicationRecord
   has_many :tweets
   
-  def rerun_query
+  def rerun_query # twitter search API
+    
+    # Requests / 15-min window (app auth)	
     if self.keyword.present?
 
       client = Twitter::REST::Client.new do |config|
@@ -25,10 +27,4 @@ class Channel < ApplicationRecord
     end
   end
   
-  def fetch
-    require 'coinbase/wallet'
-    client = Coinbase::Wallet::Client.new(api_key: ENV["COINBASE_API_KEY"]) # , api_secret: <api secret>
-    
-    raise client.exchange_rates.inspect
-  end
 end

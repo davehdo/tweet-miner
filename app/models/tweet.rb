@@ -1,3 +1,5 @@
+# originally named tweet, this is probably more appropriately named "queries"
+
 class Tweet < ApplicationRecord
   belongs_to :channel
   
