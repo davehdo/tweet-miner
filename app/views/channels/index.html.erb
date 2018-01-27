@@ -24,7 +24,7 @@
         <td><%= t = channel.tweets.order("created_at desc").limit(1).select("full_json,created_at")[0]; 
           t ? "#{time_ago_in_words(t.created_at)} ago" : "none" %></td>
         <td><%= t ? t.unique_tweets_per_hour : "" %></td>
-        <td><%= ExchangeRate.recent_or_fetch.parsed["rates"][ channel.keyword ] %> USD</td>
+        <td><%= ExchangeRate.recent_or_fetch.parsed["rates"][ channel.symbol ] %> USD</td>
         <td><%= link_to 'Show', channel_tweets_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%= link_to 'Edit', edit_channel_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%# link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
