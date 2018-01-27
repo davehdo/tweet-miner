@@ -3,6 +3,10 @@ class ExchangeRate < ApplicationRecord
     self.full_json.present? ? JSON.parse(self.full_json) : nil
   end
   
+  def price_of( symbol )
+    self.parsed and self.parsed["rates"] and self.parsed["rates"][symbol] ? (1.0 / self.parsed["rates"][symbol].to_f ): nil
+  end
+  
   def self.recent_or_fetch
     latest = order("created_at desc").limit(1).first
     if latest and latest.created_at > Time.now - 10.minutes
@@ -11,6 +15,12 @@ class ExchangeRate < ApplicationRecord
       fetch_and_store
     end
   end
+  
+  def self.recent_price_of( symbol )
+    p = recent_or_fetch.price_of( symbol )
+    p ? p.round(3) : nil
+  end
+  
   
   def self.fetch_and_store
     puts "fetching exchange rates"
