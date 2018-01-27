@@ -7,22 +7,35 @@ class ExchangeRate < ApplicationRecord
     self.parsed and self.parsed["rates"] and self.parsed["rates"][symbol] ? (1.0 / self.parsed["rates"][symbol].to_f ): nil
   end
   
-  def self.recent_or_fetch
+  
+  def self.recent( expires_in=10.minutes )
     latest = order("created_at desc").limit(1).first
-    if latest and latest.created_at > Time.now - 10.minutes
+    if latest and latest.created_at > Time.now - expires_in
+      puts "there is a recent exchange rate"
       latest
     else
-      fetch_and_store
+      nil
     end
   end
   
-  def self.recent_price_of( symbol )
-    p = recent_or_fetch.price_of( symbol )
-    p ? p.round(3) : nil
+  
+  def self.recent_or_fetch
+    recent || fetch_and_store
+  end
+  
+  
+  def self.recent_price_of( symbol, fetch_if_absent=false )
+    p = fetch_if_absent ? recent_or_fetch : recent
+    q = p ? p.price_of( symbol ) : nil
+    q ? q.round(3) : nil
   end
   
   
   def self.fetch_and_store
+    ["COINBASE_API_PASSWORD", "COINBASE_API_KEY"].each do |e|
+      raise "Env variable #{e} not defined" if ENV[e].blank?
+    end 
+    
     puts "fetching exchange rates"
     require 'coinbase/wallet'
     client = Coinbase::Wallet::Client.new(api_key: ENV["COINBASE_API_KEY"], api_secret: ENV["COINBASE_API_PASSWORD"])
