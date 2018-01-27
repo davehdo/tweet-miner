@@ -7,7 +7,7 @@
 
 
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart', "scatter"]});
+      google.charts.load('current', {'packages':['corechart', "line"]});
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
@@ -37,28 +37,18 @@
             minValue: 0
           },
           series: {
-              0: {axis: 'hours studied'},
-              1: {axis: 'final grade'}
+              0: {axis: 'n'},
+              1: {axis: 'price'}
             },
           axes: {
             y: {
-              'hours studied': {label: 'Hours Studied'},
-              'final grade': {label: 'Final Exam Grade'}
+              'n': {label: 'Tweets per hour'},
+              'price': {label: 'Price in USD', format: 'currency'}
             }
           },
-          trendlines: {
-              0: {
-                type: 'linear',
-                color: 'green',
-                lineWidth: 3,
-                opacity: 0.3,
-                showR2: true,
-                visibleInLegend: true
-              }
-            }
-          };
-        var materialChart = new google.charts.Scatter(document.getElementById('chart_div'));
-        materialChart.draw(data, google.charts.Scatter.convertOptions(options));
+        };
+        var materialChart = new google.charts.Line(document.getElementById('chart_div'));
+        materialChart.draw(data, google.charts.Line.convertOptions(options));
 
         // var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
