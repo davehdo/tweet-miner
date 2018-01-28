@@ -18,7 +18,7 @@
 
         data.addRows(<%= 
           (
-            @tweets.collect {|t| [t.created_at, t.unique_tweets_per_hour.round, nil ]} +
+            @tweets.collect {|t| [t.created_at, t.statistics["unique_tweets_per_hour"].round, nil ]} +
             ExchangeRate.order("created_at ASC").collect {|t| [t.created_at, nil, t.price_of(@channel.symbol) ]}
           ).to_json.html_safe %>
           .map(function(e) {return [new Date(e[0]), e[1], e[2]]}))
@@ -73,16 +73,16 @@
     <%
     
 
-    earliest_at = Time.parse( tweet.parsed_json.last["created_at"] )
-    latest_at = Time.parse( tweet.parsed_json.first["created_at"] )
+    earliest_at = Time.parse(tweet.statistics["earliest_at"])
+    latest_at = Time.parse(tweet.statistics["latest_at"])
     
     %>
       <tr>
-        <td><%= tweet.parsed_json.size %> 
-          (<%= tweet.n_unique_tweets %> unique text)
+        <td><%= tweet.statistics["n_tweets"] %> 
+          (<%= tweet.statistics["n_unique_tweets"] %> unique text)
         </td>
-        <td><%= earliest_at.strftime("%Y-%m-%d %H:%M") %> &mdash; 
-          <%= latest_at.strftime(earliest_at.to_date == latest_at.to_date ? "%H:%M" : "%m-%d %H:%M") %>
+        <td><%= earliest_at.strftime("%Y-%m-%d %H:%M") if earliest_at %> &mdash; 
+          <%= latest_at.strftime(earliest_at.to_date == latest_at.to_date ? "%H:%M" : "%m-%d %H:%M") if latest_at %>
         </td>
         <td><%= time_ago_in_words( tweet.created_at ) %> ago</td>
         <td><%= link_to 'Show', tweet %></td>

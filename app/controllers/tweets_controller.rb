@@ -11,7 +11,7 @@ class TweetsController < ApplicationController
     end
     
     
-    @tweets = @channel ? @channel.tweets : Tweet.all
+    @tweets = @channel ? @channel.tweets.select("id, keyword, created_at, channel_id, statistics_json") : Tweet.all
   end
 
   # GET /tweets/1

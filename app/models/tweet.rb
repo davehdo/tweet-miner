@@ -36,7 +36,11 @@ class Tweet < ApplicationRecord
   
   def update_statistics
     self.statistics = {
-      "unique_tweets_per_hour" => self.unique_tweets_per_hour
+      "unique_tweets_per_hour" => self.unique_tweets_per_hour,
+      "earliest_at" => Time.parse( self.parsed_json.last["created_at"] ),
+      "latest_at" => Time.parse( self.parsed_json.first["created_at"] ),
+      "n_tweets" => self.parsed_json.size,
+      "n_unique_tweets" => self.n_unique_tweets
     }
   end
 end
