@@ -10,7 +10,7 @@ class ExchangeRate < ApplicationRecord
   
   def self.recent( relative_to=Time.now, expires_in=10.minutes )
     # TODO: index exchangerate by created_at
-    latest = where("created_at <= ? AND created_at >= ?", Time.now, Time.now - expires_in).order("created_at desc").limit(1).first
+    latest = where("created_at <= ? AND created_at >= ?", relative_to, relative_to - expires_in).order("created_at desc").limit(1).first
     if latest 
       puts "there is a recent exchange rate"
       latest
