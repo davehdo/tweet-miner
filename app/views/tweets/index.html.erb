@@ -19,7 +19,7 @@
         data.addRows(<%= 
           (
             @tweets.collect {|t| [t.created_at, t.unique_tweets_per_hour.round, nil ]} +
-            ExchangeRate.all.collect {|t| [t.created_at, nil, t.price_of(@channel.symbol) ]}
+            ExchangeRate.order("created_at ASC").collect {|t| [t.created_at, nil, t.price_of(@channel.symbol) ]}
           ).to_json.html_safe %>
           .map(function(e) {return [new Date(e[0]), e[1], e[2]]}))
 
