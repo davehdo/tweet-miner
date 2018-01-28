@@ -5,7 +5,6 @@
 
 <div id="chart_div" style="width: 900px; height: 300px"></div>
 
-
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart', "line"]});
       google.charts.setOnLoadCallback(drawChart);
@@ -28,8 +27,9 @@
           // title: 'Tweets per hour',
           width: 900,
           height: 250,
+          curveType: "function",
           hAxis: {
-            format: 'M/d/yy',
+            format: 'M/d/yy H:mm',
             gridlines: {count: 15}
           },
           vAxis: {
