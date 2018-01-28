@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to "Features API", api_channel_path(@channel), class: "btn btn-default pull-right" %>
+
 <h1>Queries<%= " for #{@channel.name} (#{@channel.symbol})" if @channel %></h1>
 
 
