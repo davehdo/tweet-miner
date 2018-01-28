@@ -10,8 +10,8 @@ class TweetsController < ApplicationController
       @channel = Channel.find(params[:channel_id])
     end
     
-    
-    @tweets = @channel ? @channel.tweets.select("id, keyword, created_at, channel_id, statistics_json") : Tweet.all
+    # avoid including full_json because if there are many records requires a lot of memory
+    @tweets = @channel ? @channel.tweets.order("created_at ASC").select("id, keyword, created_at, channel_id, statistics_json") : Tweet.all
   end
 
   # GET /tweets/1
