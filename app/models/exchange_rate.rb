@@ -21,12 +21,13 @@ class ExchangeRate < ApplicationRecord
   
   # this is used by rake task to fetch quotes but not more than needed
   def self.recent_or_fetch
-    recent || fetch_and_store
+    # refetch if 10 minutes old
+    recent( Time.now, 10.minutes) || fetch_and_store
   end
   
   
-  def self.recent_price_of( symbol, relative_to=Time.now )
-    p = recent( relative_to )
+  def self.recent_price_of( symbol, relative_to=Time.now, expires_in=10.minutes )
+    p = recent( relative_to, expires_in )
     q = p ? p.price_of( symbol ) : nil
     q ? q.round(3) : nil
   end
