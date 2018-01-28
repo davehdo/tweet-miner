@@ -11,7 +11,7 @@
       <th>Last query at</th>
       <th>Mentions per hour</th>
       <th>Last exchange rate</th>
-      <th colspan="2"></th>
+      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -26,6 +26,7 @@
         <td><%= t ? t.unique_tweets_per_hour : "" %></td>
         <td><%= r=ExchangeRate.recent_price_of(channel.symbol); r ? "#{r} USD" : nil %></td>
         <td><%= link_to 'Show', channel_tweets_path(channel), class: "btn btn-default btn-xs" %></td>
+        <td><%= link_to 'Show features json', api_channel_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%= link_to 'Edit', edit_channel_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%# link_to 'Destroy', channel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
