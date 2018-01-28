@@ -8,9 +8,10 @@ class ExchangeRate < ApplicationRecord
   end
   
   
-  def self.recent( expires_in=10.minutes )
-    latest = order("created_at desc").limit(1).first
-    if latest and latest.created_at > Time.now - expires_in
+  def self.recent( relative_to=Time.now, expires_in=10.minutes )
+    # TODO: index exchangerate by created_at
+    latest = where("created_at <= ? AND created_at >= ?", Time.now, Time.now - expires_in).order("created_at desc").limit(1).first
+    if latest 
       puts "there is a recent exchange rate"
       latest
     else
@@ -18,14 +19,14 @@ class ExchangeRate < ApplicationRecord
     end
   end
   
-  
+  # this is used by rake task to fetch quotes but not more than needed
   def self.recent_or_fetch
     recent || fetch_and_store
   end
   
   
-  def self.recent_price_of( symbol, fetch_if_absent=false )
-    p = fetch_if_absent ? recent_or_fetch : recent
+  def self.recent_price_of( symbol, relative_to=Time.now )
+    p = recent( relative_to )
     q = p ? p.price_of( symbol ) : nil
     q ? q.round(3) : nil
   end
