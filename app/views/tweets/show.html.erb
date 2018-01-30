@@ -45,15 +45,17 @@
     </td>
     <td>
       <% if params[:expanded] == "t" %>
-      <table class="table">
 
-      <% tweet.select {|k,v| !omit_keys.include?(k)}.each do |k,v| %>
-        <tr>
-          <td><%= k %></td>
-          <td><%= v.class == Hash ? v.select {|k,v| !omit_keys.include?(k)} : v %></td>
-        </tr>
-      <% end %>
-      </table>
+        <table class="table">
+
+        <% tweets[0].select {|k,v| !omit_keys.include?(k)}.each do |k,v| %>
+          <tr>
+            <td><%= k %></td>
+            <td><%= v.class == Hash ? v.select {|k,v| !omit_keys.include?(k)} : v %></td>
+          </tr>
+        <% end %>
+        </table>
+
       <% end %>
     </td>
   </tr>
