@@ -13,6 +13,11 @@ class Tweet < ApplicationRecord
     (1.0 * n_unique_tweets / time_span).round
   end
   
+  def followers_reached_per_hour
+    (parsed_json.collect {|e| e["user"]["followers_count"] }.sum.to_f / time_span).round
+    
+  end
+  
   def n_unique_tweets
     parsed_json.uniq {|e| e["text"].gsub(/\d/, "0").gsub(/^RT @.*?: /, "")}.size  
   end
@@ -37,6 +42,7 @@ class Tweet < ApplicationRecord
   def update_statistics
     self.statistics = {
       "unique_tweets_per_hour" => self.unique_tweets_per_hour,
+      "followers_reached_per_hour" => self.followers_reached_per_hour,
       "earliest_at" => Time.parse( self.parsed_json.last["created_at"] ),
       "latest_at" => Time.parse( self.parsed_json.first["created_at"] ),
       "n_tweets" => self.parsed_json.size,
