@@ -23,8 +23,8 @@ json.features @tweets.collect do |tweet|
       prior_tweet = @tweets.find {|t| t.created_at < tweet.created_at - hrs.hours }
     
       if prior_tweet
-        ["unique_tweets_per_hour"].each do |feature|
-          json.set! "#{feature}_#{hrs}h_frac_change", ((tweet.statistics[feature] - prior_tweet.statistics[feature]).to_f / prior_tweet.statistics[feature])
+        ["unique_tweets_per_hour", "followers_reached_per_hour"].each do |feature|
+          json.set! "#{feature}_#{hrs}h_frac_change", ((tweet.statistics[feature] - prior_tweet.statistics[feature]).to_f / prior_tweet.statistics[feature]).round(5)
         end
       end
     end
@@ -34,6 +34,6 @@ json.features @tweets.collect do |tweet|
     value_t_0: value_t_0,
     value_t_6: value_t_6,
     relative_value_t_6: (value_t_0 and value_t_6) ? (1.0 * value_t_6 / value_t_0) : nil,
-    frac_change_t_6: (value_t_0 and value_t_6) ? ( (value_t_6 - value_t_0).to_f / value_t_0) : nil
+    frac_change_t_6: (value_t_0 and value_t_6) ? ( (value_t_6 - value_t_0).to_f / value_t_0).round(5) : nil
   })
 end
