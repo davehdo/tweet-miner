@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180128145333) do
+ActiveRecord::Schema.define(version: 20180131030436) do
 
   create_table "channels", force: :cascade do |t|
     t.string "keyword"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20180128145333) do
     t.text "full_json"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_exchange_rates_on_created_at"
   end
 
   create_table "tweets", force: :cascade do |t|
@@ -35,6 +36,8 @@ ActiveRecord::Schema.define(version: 20180128145333) do
     t.datetime "updated_at", null: false
     t.integer "channel_id"
     t.text "statistics_json"
+    t.index ["channel_id", "created_at"], name: "index_tweets_on_channel_id_and_created_at"
+    t.index ["channel_id"], name: "index_tweets_on_channel_id"
   end
 
 end
