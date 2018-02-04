@@ -1,17 +1,10 @@
+require "exception_notify_block.rb"
+
+extend ExceptionNotifyBlock
+
+
 namespace :channels do
-  def exception_notify
-    yield
-  rescue Exception => exception
-    env = {}
-    env['exception_notifier.options'] = { 
-      :email_prefix => '[Exception] ',
-      :sender_address => '"R2D2" <noreply@skroutz.gr>',
-      :exception_recipients => 'dev@skroutz.gr',
-      :sections => [ 'backtrace']
-    }
-    ExceptionNotifier::Notifier.exception_notification(env, exception).deliver
-    raise exception
-  end
+
   
   task :fetch_all => :environment do
     Channel.where(active: true).each do |channel|
