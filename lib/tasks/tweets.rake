@@ -9,4 +9,9 @@ namespace :tweets do
     Tweet.where("statistics_json NOT LIKE '%followers_reached_per_hour%'").limit(100).each(&:save)
   end
 
+  # meant to test exception notification
+  task :test => :environment do
+    raise "this is a test"
+  end
+
 end
