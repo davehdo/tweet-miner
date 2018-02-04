@@ -68,3 +68,4 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
 gem "coinbase"
 
+gem "exception_notification"

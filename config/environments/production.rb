@@ -1,3 +1,11 @@
+Rails.application.config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    # :deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
+    :email_prefix => "[CRYPTOCURRENCY] ",
+    :sender_address => %{"notifier" <notifier@example.com>},
+    :exception_recipients => ENV["EXCEPTION_RECIPIENTS"].split(",")
+  }
+  
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -62,6 +70,25 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "tweet_miner_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
+  # the following three lines added for exception notification
+  # in addition to adding these settings, need to 
+  # go to https://myaccount.google.com/lesssecureapps
+  # to enable gmail to send
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => "example.com",
+    :authentication => :plain,
+    :user_name            => ENV["GMAIL_USERNAME"],
+    :password             => ENV["GMAIL_PASSWORD"],
+  }
+  
+    
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
