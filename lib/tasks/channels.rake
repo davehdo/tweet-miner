@@ -11,4 +11,7 @@ namespace :channels do
     end
   end
 
+  task :test => :environment do
+    Channel.test_exception
+  end
 end

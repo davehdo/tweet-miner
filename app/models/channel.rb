@@ -1,6 +1,10 @@
 class Channel < ApplicationRecord
   has_many :tweets
   
+  def self.test_exception
+    1 / 0
+  end
+  
   def last_query
     tweets.order("created_at desc").limit(1)[0]; 
   end
