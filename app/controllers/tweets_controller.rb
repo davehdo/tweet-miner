@@ -11,7 +11,8 @@ class TweetsController < ApplicationController
     end
     
     # avoid including full_json because if there are many records requires a lot of memory
-    @tweets = @channel ? @channel.tweets.order("created_at ASC").select("id, keyword, created_at, channel_id, statistics_json") : Tweet.all
+    @tweets = @channel ? @channel.tweets.where("created_at > ?", Time.now - 7.days ).order("created_at ASC").select("id, keyword, created_at, channel_id, statistics_json") : Tweet.all
+    @exchange_rates = ExchangeRate.where("created_at > ?", Time.now - 7.days ).order("created_at ASC")
   end
 
   # GET /tweets/1

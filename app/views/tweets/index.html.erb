@@ -27,7 +27,7 @@
               t.statistics["followers_reached_per_hour"],
               nil, 
             ]} +
-            ExchangeRate.order("created_at ASC").collect {|t| [
+            @exchange_rates.collect {|t| [
               t.created_at, 
               nil, 
               nil,
