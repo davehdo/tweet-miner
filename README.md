@@ -10,6 +10,9 @@ TWITTER_ACCESS_TOKEN=1234
 TWITTER_ACCESS_SECRET=1234
 COINBASE_API_PASSWORD=[API key, not OAuth2 application credentials]
 COINBASE_API_KEY=[this is the same as the coinbase account password]
+EXCEPTION_RECIPIENTS=
+GMAIL_PASSWORD=a@gmail.com [be sure to include the @gmail.com]
+GMAIL_USERNAME=
 ```
 
 
