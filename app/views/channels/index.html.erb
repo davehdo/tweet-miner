@@ -24,7 +24,7 @@
         <td><%= t = channel.tweets.order("created_at desc").limit(1).select("full_json,created_at")[0]; 
           t ? "#{time_ago_in_words(t.created_at)} ago" : "none" %></td>
         <td><%= t ? t.unique_tweets_per_hour : "" %></td>
-        <td><%= r=ExchangeRate.recent_price_of(channel.symbol); r ? "#{r} USD" : nil %></td>
+        <td><%= r=ExchangeRate.recent_price_of(channel.symbol, Time.now, 30.minutes); r ? "#{r} USD" : nil %></td>
         <td><%= link_to 'Show', channel_tweets_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%= link_to 'Show features json', api_channel_path(channel), class: "btn btn-default btn-xs" %></td>
         <td><%= link_to 'Edit', edit_channel_path(channel), class: "btn btn-default btn-xs" %></td>
