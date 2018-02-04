@@ -76,7 +76,7 @@ Rails.application.configure do
   # to enable gmail to send
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
