@@ -1,5 +1,9 @@
 # because rake tasks don't trigger exception notification by default
 # wrap items with a exception_notify block
+# to use, at the top of the rake task, add these two lines:
+# require "exception_notify_block.rb"
+# extend ExceptionNotifyBlock
+
 
 module ExceptionNotifyBlock
   
