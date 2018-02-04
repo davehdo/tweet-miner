@@ -11,7 +11,8 @@ namespace :tweets do
 
   # meant to test exception notification
   task :test => :environment do
-    raise "this is a test"
+    1 / 0
+
   end
 
 end
