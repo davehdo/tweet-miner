@@ -27,9 +27,13 @@ class ExchangeRate < ApplicationRecord
   
   
   def self.recent_price_of( symbol, relative_to=Time.now, expires_in=10.minutes )
-    p = recent( relative_to, expires_in )
-    q = p ? p.price_of( symbol ) : nil
-    q ? q.round(3) : nil
+    if symbol.present?
+      p = recent( relative_to, expires_in )
+      q = p ? p.price_of( symbol ) : nil
+      q ? q.round(3) : nil
+    else
+      nil
+    end
   end
   
   
@@ -41,7 +45,7 @@ class ExchangeRate < ApplicationRecord
 
     # uri = URI.parse("https://api.twitter.com/1/statuses/user_timeline.json")
     uri = URI.parse('https://min-api.cryptocompare.com/data/price')
-    args = {fsym: "USD", tsyms: "BTC,ETH,BCH,XRP,TRX,LTC,EOS,WTC,XLM,OMG,DASH,BNB,XMR,NEO,VEN,ETC,ZEC,HSR,IOT,ICX,ADA", extraParams: "cryptocurrency-tracking"}
+    args = {fsym: "USD", tsyms: "BTC,ETH,BCH,XRP,TRX,LTC,EOS,WTC,XLM,OMG,DASH,BNB,XMR,NEO,VEN,ETC,ZEC,HSR,IOT,ICX,ADA,XEM", extraParams: "cryptocurrency-tracking"}
     uri.query = URI.encode_www_form(args)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
