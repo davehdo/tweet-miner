@@ -15,8 +15,9 @@ class Channel < ApplicationRecord
       config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"] 
       config.consumer_secret     = ENV["TWITTER_CONSUMER_SECRET"] 
       
-      config.access_token        = ENV["TWITTER_ACCESS_TOKEN"]
-      config.access_token_secret = ENV["TWITTER_ACCESS_SECRET"]
+      # Some resources require single-user authentication, in which case we include the following
+      # config.access_token        = ENV["TWITTER_ACCESS_TOKEN"]
+      # config.access_token_secret = ENV["TWITTER_ACCESS_SECRET"]
     end
   end
   
