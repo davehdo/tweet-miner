@@ -9,19 +9,25 @@ class Channel < ApplicationRecord
     tweets.order("created_at desc").limit(1)[0]; 
   end
   
+  def self.client
+    @client ||= Twitter::REST::Client.new do |config|
+      # first two params are used in application-only authentication
+      config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"] 
+      config.consumer_secret     = ENV["TWITTER_CONSUMER_SECRET"] 
+      
+      config.access_token        = ENV["TWITTER_ACCESS_TOKEN"]
+      config.access_token_secret = ENV["TWITTER_ACCESS_SECRET"]
+    end
+  end
+  
+  
   def rerun_query # twitter search API
     puts "  Fetching twitter data for #{ self.name }"
     # Requests / 15-min window (app auth)	
     if self.keyword.present?
-
-      client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"]
-        config.consumer_secret     = ENV["TWITTER_CONSUMER_SECRET"]
-        config.access_token        = ENV["TWITTER_ACCESS_TOKEN"]
-        config.access_token_secret = ENV["TWITTER_ACCESS_SECRET"]
-      end
+      # go to apps.twitter.com to add an app and generate these keys and tokens
       
-      tweets = client.search(self.keyword, result_type: "recent", count: 100).collect do |tweet|
+      tweets = Channel.client.search(self.keyword, result_type: "recent", count: 100).collect do |tweet|
         # puts tweet.favorite_count
         # puts tweet.retweet_count
         # puts tweet.full_text
