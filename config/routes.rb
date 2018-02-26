@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   
   namespace "api" do
-    resources :channels, only: [:show], defaults: {format: :json}
+    resources :channels, only: [:show], defaults: {format: :json} do
+      member do 
+        get "raw"
+      end
+    end
   end
   
   resources :channels do

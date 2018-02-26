@@ -1,5 +1,5 @@
 class Api::ChannelsController < ApplicationController
-  before_action :set_channel, only: [:show]
+  before_action :set_channel, only: [:show, :raw]
 
   # GET /channels
   # GET /channels.json
@@ -12,6 +12,9 @@ class Api::ChannelsController < ApplicationController
   end
 
 
+  def raw
+  end
+  
 
 
   private
